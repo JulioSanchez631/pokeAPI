@@ -1,0 +1,6 @@
+@for(item of listadoPokemons();track item.id){
+  <div>
+    <h2>{{ item.nombre }}</h2>
+    <img src="{{ item.imgURL }}" alt="pokemon">
+  </div>
+}
