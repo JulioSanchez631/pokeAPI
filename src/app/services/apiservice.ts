@@ -22,47 +22,53 @@ export class APIservice {
 
   getPokemons() : void {
 
-    // Aquí hay un problema, que si se llega a cambiar la petición GET de la API, al tener guardada una versión antigua en LocalStorage no se va a mostrar en el HTML, entonces tendrias que borrar el local storage con removeItem, se necesita cambiar la logica de esta condicional.
-    if(!this.state().pokemons.size){
+    const API = this.HTTP.get<any>(`${this.URL}/pokemon?limit=10`);
 
-      this.HTTP.get<any>(`${this.URL}/pokemon?limit=22`).pipe(
-  
-        mergeMap(respuesta => {
-          
-          const detalles = respuesta.results.map((item : any) => {
-            return this.HTTP.get<any>(item.url);
-          })
-  
-          return forkJoin(detalles);
-        }),
-        map(detalles => formateoPokemons(detalles)),
-        take(1)
-  
-      ).subscribe(pokemons => {
-        // Guardarlo en el signal y mata la suscripción porfavor, es decir, cuando el componente deje de existir
-        // Con eso tendríamos el get realizado, el signal que debes de usar, como fuente de la verdad absoluta es state.
-        this.state.update((valores) => {
+    API.subscribe((datos) => {
+      console.log(datos.resuls);
+    
+      if(datos.results.length != Array.from(this.state().pokemons).length){
+        console.log('Hay cambios');
+
+        API.pipe(
+
+          mergeMap(respuesta => {
             
-            const listado = valores.pokemons;
-  
-            pokemons.forEach(item => {
-              listado.set(item.id,item);
+            const detalles = respuesta.results.map((item : any) => {
+              return this.HTTP.get<any>(item.url);
             })
-  
-            return {
-              ...valores,
-              pokemons: listado
-            };
-          
-        });
+    
+            return forkJoin(detalles);
+          }),
+          map(detalles => formateoPokemons(detalles)),
+          take(1)
+    
+        ).subscribe(pokemons => {
+          this.state.update((valores) => {
+              
+              const listado = valores.pokemons;
+    
+              pokemons.forEach(item => {
+                listado.set(item.id,item);
+              })
+    
+              return {
+                ...valores,
+                pokemons: listado
+              };
+            
+          });
 
-        // Realizar guardado del signal en LocalStorage.
-        this.localStorageServicio.guardarPokemons(this.state().pokemons);
-  
-      })
-    } else{
-      console.log('Ejecutado.');
-    }
+          // Realizar guardado del signal en LocalStorage.
+          this.localStorageServicio.guardarPokemons(this.state().pokemons);
+    
+        })
+
+      } else{
+        console.log('Sigue igual todo');
+      }
+    
+    })
 
   }
 }

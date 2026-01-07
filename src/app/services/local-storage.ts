@@ -21,6 +21,7 @@ export class LocalStorage {
 
     localStorage.setItem('pokeDatos',JSON.stringify(arrayPokemons));
   
+    console.log('GUARDADO DE POKEMONS... LOCAL');
     this.obtenerPokemons();
     }
   }
@@ -31,8 +32,8 @@ export class LocalStorage {
 
   obtenerPokemons(){
 
-    
     if(isPlatformBrowser(this.plataformaID)){
+      console.log('Obteniendo...');
       // localStorage.removeItem('pokeDatos');
 
       const pokemonsDatos = localStorage.getItem('pokeDatos');
