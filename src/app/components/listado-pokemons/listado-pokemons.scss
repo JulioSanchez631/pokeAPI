@@ -1,0 +1,12 @@
+section{
+  display:flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap:12px;
+}
+
+section > *{
+  flex-basis: 200px;
+  border-radius:12px;
+  border: 1px solid var(--border-color);
+}

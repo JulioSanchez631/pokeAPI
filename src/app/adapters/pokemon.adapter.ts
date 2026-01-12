@@ -14,10 +14,9 @@ export const formateoPokemons = (pokemons : any) : Pokemon[] => {
       id: item.id,
       nombre: item.name,
       tipos: tipos,
-      imgURL: item.sprites.front_default
+      imgURL: item.sprites.front_default,
+      marcado: false
     }
-
-    console.log(pokemon);
 
     return pokemon;
   })

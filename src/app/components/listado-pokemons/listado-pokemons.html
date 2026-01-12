@@ -1,6 +1,12 @@
-@for(item of listadoPokemons();track item.id){
-  <div>
-    <h2>{{ item.nombre }}</h2>
-    <img src="{{ item.imgURL }}" alt="pokemon">
-  </div>
-}
+<section>
+
+  @for(item of listadoPokemons();track item.id){
+    <app-tarjeta-pokemon
+    [pokemon]="item"
+    (itemEliminado)="eliminarPokemon($event)"
+    (itemMarcado)="marcarPokemon($event)"
+    >
+    </app-tarjeta-pokemon>
+  }
+
+</section>

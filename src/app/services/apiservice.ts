@@ -1,9 +1,10 @@
-import { Injectable, PLATFORM_ID, inject, signal } from '@angular/core';
+import { Injectable, PLATFORM_ID, effect, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { forkJoin, map, mergeMap, Observable, take} from 'rxjs';
 import { formateoPokemons } from '../adapters/pokemon.adapter';
-import { LocalStorage } from './local-storage';
 import { isPlatformBrowser } from '@angular/common';
+import { LocalStorage } from './local-storage';
+import { Pokemon } from '../models';
 
 @Injectable({
   providedIn: 'root',
@@ -11,25 +12,33 @@ import { isPlatformBrowser } from '@angular/common';
 export class APIservice {
   private URL = 'https://pokeapi.co/api/v2/';
   private HTTP = inject(HttpClient);
-  
+
   private localStorageServicio = inject(LocalStorage);
 
   private plataformaID = inject(PLATFORM_ID);
 
   state = signal({
     pokemons: this.localStorageServicio.obtenerPokemons()
-  });
+  })
+
+  constructor(){
+
+    effect(() => {
+      const mapaActual = this.state().pokemons
+
+      this.localStorageServicio.guardarPokemons(mapaActual);
+    })
+
+  }
 
   getPokemons() : void {
 
-    const API = this.HTTP.get<any>(`${this.URL}/pokemon?limit=10`);
+    const cantidadPokemons = 20
+
+    const API = this.HTTP.get<any>(`${this.URL}/pokemon?limit=${cantidadPokemons}`);
 
     API.subscribe((datos) => {
-      console.log(datos.resuls);
     
-      if(datos.results.length != Array.from(this.state().pokemons).length){
-        console.log('Hay cambios');
-
         API.pipe(
 
           mergeMap(respuesta => {
@@ -44,14 +53,17 @@ export class APIservice {
           take(1)
     
         ).subscribe(pokemons => {
+
           this.state.update((valores) => {
-              
+
+            valores.pokemons = new Map <number, Pokemon>;
+            
               const listado = valores.pokemons;
-    
+
               pokemons.forEach(item => {
                 listado.set(item.id,item);
               })
-    
+
               return {
                 ...valores,
                 pokemons: listado
@@ -64,9 +76,9 @@ export class APIservice {
     
         })
 
-      } else{
-        console.log('Sigue igual todo');
-      }
+      // } else{
+      //   console.log('Sigue igual todo');
+      // }
     
     })
 

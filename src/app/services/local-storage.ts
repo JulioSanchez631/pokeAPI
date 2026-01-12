@@ -6,23 +6,20 @@ import { isPlatformBrowser } from '@angular/common';
   providedIn: 'root',
 })
 export class LocalStorage {
-  
+
   private plataformaID = inject(PLATFORM_ID);
 
-  guardarPokemons(pokemons : Map<number, Pokemon[]>){
+  guardarPokemons(pokemons : Map<number, Pokemon>){
 
     if(isPlatformBrowser(this.plataformaID)){
 
-    // console.log(pokemons);
+      const arrayPokemons = Array.from(pokemons);
 
-    const arrayPokemons = Array.from(pokemons);
+      console.log(arrayPokemons);
 
-    // console.log(arrayPokemons);
+      localStorage.setItem('pokeDatos',JSON.stringify(arrayPokemons));
 
-    localStorage.setItem('pokeDatos',JSON.stringify(arrayPokemons));
-  
-    console.log('GUARDADO DE POKEMONS... LOCAL');
-    this.obtenerPokemons();
+      // this.obtenerPokemons();
     }
   }
 
@@ -33,23 +30,22 @@ export class LocalStorage {
   obtenerPokemons(){
 
     if(isPlatformBrowser(this.plataformaID)){
-      console.log('Obteniendo...');
       // localStorage.removeItem('pokeDatos');
-
       const pokemonsDatos = localStorage.getItem('pokeDatos');
 
       if(pokemonsDatos){
+        console.log('Hello');
         
         const arrayPokemons = JSON.parse(pokemonsDatos);
   
-        const map = new Map<number , any>();
+        const map = new Map<number , Pokemon>();
   
         arrayPokemons.forEach((item : any) => {
+
           map.set(item[0],item[1]);
         })
-  
+
         return map;
-  
       }
 
     }
@@ -58,6 +54,26 @@ export class LocalStorage {
     return map;
     
 
+  }
+
+  modoOscuro(){
+    if(isPlatformBrowser(this.plataformaID)){
+      const modo = localStorage.getItem('modoOscuro');
+      
+      if(modo){
+        return JSON.parse(modo);
+      }
+      
+      return false;
+    }
+    
+
+  }
+
+  guardarModo(valor : boolean){
+    if(isPlatformBrowser(this.plataformaID)){
+      localStorage.setItem('modoOscuro',JSON.stringify(valor));
+    } 
   }
 
 }

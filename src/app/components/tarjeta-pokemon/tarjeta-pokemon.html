@@ -1,1 +1,12 @@
-<p>tarjeta-pokemon works!</p>
+    <div class="item-card-pokemon {{pokemon()?.marcado ? 'marcado' : ''}}">
+
+      <h2>{{ pokemon()?.nombre }}</h2>
+      <!-- <span>{{ pokemon()?.id }}</span> -->
+      <img src="{{ pokemon()?.imgURL }}" alt="Imagen-pokemon">
+        
+        <div class="contenedor-acciones">
+          <button matButton="filled" (click)="eliminado()">Eliminar</button>
+          <button matButton="filled" (click)="marcado()">Marcar</button>
+        </div>
+
+    </div>

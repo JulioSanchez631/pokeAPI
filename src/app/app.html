@@ -1,5 +1,15 @@
 <h1>Proyecto PokeAPI con Angular</h1>
 
-<app-listado-pokemons></app-listado-pokemons>
+  <button matFab extended (click)="obtenerPokemons()">
+        Obtener todo
+      </button>
+
+      <button matFab extended (click)="modoOscuro()">
+        Oscuro
+      </button>
+
+<main>
+  <app-listado-pokemons></app-listado-pokemons>
+</main>
 
 <router-outlet />
