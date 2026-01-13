@@ -9,9 +9,11 @@ import {MatButtonModule} from '@angular/material/button';
 import { APIservice } from './services/apiservice';
 import { ModoOscuro } from './services/modo-oscuro';
 
+import { Formulario } from './components/formulario/formulario';
+
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, ListadoPokemons, MatIconModule, MatDividerModule, MatButtonModule],
+  imports: [RouterOutlet, ListadoPokemons, MatIconModule, MatDividerModule, MatButtonModule, Formulario],
   templateUrl: './app.html',
   styleUrl: './app.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

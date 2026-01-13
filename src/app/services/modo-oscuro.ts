@@ -18,7 +18,6 @@ export class ModoOscuro {
 
   constructor(){
     effect(() => {
-      console.log('EJECUTADO.')
       this.servicioLocalStorage.guardarModo(this.modoOscuro());
 
       if(isPlatformBrowser(this.platformID)){

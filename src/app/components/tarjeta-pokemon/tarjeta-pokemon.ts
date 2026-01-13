@@ -21,7 +21,9 @@ export class TarjetaPokemon {
   eliminado(){
     const idItemPokemon = this.pokemon()?.id;
     
-    if(idItemPokemon){
+    console.log(typeof idItemPokemon);
+
+    if(idItemPokemon || idItemPokemon == 0){
       this.itemEliminado.emit(idItemPokemon);
     }
   }
@@ -29,7 +31,7 @@ export class TarjetaPokemon {
   marcado(){
     const idItemPokemon = this.pokemon()?.id;
 
-    if(idItemPokemon){
+    if(idItemPokemon || idItemPokemon == 0){
       this.itemMarcado.emit(idItemPokemon);
     }
   }

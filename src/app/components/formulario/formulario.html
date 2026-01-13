@@ -1,0 +1,43 @@
+<form class="example-form" [formGroup]="this.formulario.formPoke"(submit)="enviar()">
+
+  <mat-form-field class="example-full-width">
+    <mat-label>Nombre</mat-label>
+    <input type="email" matInput formControlName="nombre" 
+          placeholder="Ej. Pikachu...">
+
+    <!-- @if(this.formulario.formPoke.dirty){ -->
+    <!-- } -->
+    @if(this.formulario.formPoke.get('nombre')?.hasError('maxlength')){
+      <mat-error>El limite es de 15 carácteres</mat-error>
+    }@else if(this.formulario.formPoke.get('nombre')?.hasError('required')){
+      <mat-error>Ingresa un nombre</mat-error>
+      }
+    
+  </mat-form-field>
+
+
+  <mat-form-field class="example-full-width">
+    <mat-label>Imagen</mat-label>
+    <label for="archivo">
+      <input class="input-img" type="text" matInput formControlName="imgURL" 
+      placeholder="Agrega una imagen..." readonly="true">
+    
+      <input id="archivo" type="file" accept="image/*" (change)="cambioImgURL($event)">
+    </label>
+      <mat-error>Selecciona una imagen</mat-error>
+
+      <!-- <mat-error>Email is <strong>required</strong></mat-error> -->
+
+  </mat-form-field>
+
+  <section>
+  <div class="example-button-row">
+    <div class="example-flex-container">
+      <button type='submit' matFab aria-label="Example icon button with a heart icon">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+  </div>
+</section>
+
+</form>

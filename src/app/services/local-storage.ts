@@ -15,8 +15,6 @@ export class LocalStorage {
 
       const arrayPokemons = Array.from(pokemons);
 
-      console.log(arrayPokemons);
-
       localStorage.setItem('pokeDatos',JSON.stringify(arrayPokemons));
 
       // this.obtenerPokemons();
@@ -34,7 +32,6 @@ export class LocalStorage {
       const pokemonsDatos = localStorage.getItem('pokeDatos');
 
       if(pokemonsDatos){
-        console.log('Hello');
         
         const arrayPokemons = JSON.parse(pokemonsDatos);
   
