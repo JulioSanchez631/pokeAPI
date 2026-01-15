@@ -5,6 +5,8 @@ h2::first-letter{
 .item-card-pokemon{
   padding: 12px;
   transition: 0.4s ease;
+  // height: 330px;
+  // width: 200px;
 }
 
 .contenedor-acciones{
@@ -27,4 +29,11 @@ h2::first-letter{
 
 .marcado{
   background-color: rgba(143, 224, 143, 0.539);
+}
+
+img{
+  width: 180px;
+  height: 180px;
+  object-fit: cover;
+  padding:12px;
 }
